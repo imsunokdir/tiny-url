@@ -120,15 +120,7 @@ npm run dev
 
 ---
 
-## 📚 Screenshots
 
-**Dashboard:**
-![Dashboard](screenshots/dashboard.png)
-
-**Create Short Link:**
-![Create](screenshots/create-link.png)
-
----
 
 ## 💡 Notes
 
@@ -136,14 +128,3 @@ npm run dev
 * Skeleton loaders are used while fetching data for a smoother UX.
 
 ---
-
-## 👤 Author
-
-**Imsu Nokdir**
-GitHub: [https://github.com/imsunokdir](https://github.com/imsunokdir)
-
----
-
-## 📝 License
-
-This project is licensed under the MIT License.
