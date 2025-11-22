@@ -4,6 +4,7 @@ import { linkApi } from "../services/linkApi";
 import { useNavigate } from "react-router-dom";
 import { Modal, message, Spin } from "antd";
 import { ExclamationCircleFilled, LoadingOutlined } from "@ant-design/icons";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface LinksTableProps {
   links: LinkType[];
@@ -135,119 +136,84 @@ const LinksTable = ({ links, onLinkDeleted }: LinksTableProps) => {
         {/* Table container */}
         <div className="bg-white rounded-lg shadow h-[500px] flex flex-col">
           <div className="flex-1 overflow-auto">
-            <table className="min-w-full">
-              <thead className="bg-gray-50 border-b-2 border-gray-200 sticky top-0 z-10">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                    Short Code
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                    Target URL
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                    Clicks
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
+            {/* Header Row */}
+            <div className="hidden sm:grid grid-cols-[140px_1fr_90px_160px] bg-gray-50 border-b-2 border-gray-200 sticky top-0 z-10 px-6 py-3 text-xs font-semibold text-gray-600 uppercase tracking-wider">
+              <div>Short Code</div>
+              <div>Target URL</div>
+              <div>Clicks</div>
+              <div>Actions</div>
+            </div>
 
-              <tbody className="divide-y divide-gray-200">
-                {filteredLinks.length > 0 ? (
-                  filteredLinks.map((link) => (
-                    <tr
-                      key={link.id}
-                      className="hover:bg-gray-50 transition sm:table-row block mb-4 sm:mb-0 border sm:border-0 rounded-lg sm:rounded-none"
+            <AnimatePresence>
+              {filteredLinks.map((link) => (
+                <motion.div
+                  key={link.id}
+                  layout
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{ duration: 0.25, ease: "easeOut" }}
+                  className="
+    grid 
+    grid-cols-1 sm:grid-cols-[140px_1fr_90px_160px]
+    px-6 py-4 
+    border-b hover:bg-gray-50 
+    rounded-lg sm:rounded-none
+  "
+                >
+                  {/* Short Code */}
+                  <div className="">
+                    <button
+                      onClick={() => navigate(`/code/${link.code}`)}
+                      className="text-purple-600 font-semibold hover:underline"
                     >
-                      {/* Short Code */}
-                      <td className="px-6 py-2 whitespace-nowrap sm:table-cell block">
-                        <span className="sm:hidden font-semibold text-gray-600">
-                          Short Code:{" "}
-                        </span>
-                        <button
-                          onClick={() => navigate(`/code/${link.code}`)}
-                          className="text-purple-600 font-semibold hover:underline"
-                        >
-                          {link.code}
-                        </button>
-                      </td>
+                      {link.code}
+                    </button>
+                  </div>
 
-                      {/* Target URL */}
-                      <td className="px-6 py-2 sm:table-cell block">
-                        <span className="sm:hidden font-semibold text-gray-600">
-                          Target URL:{" "}
-                        </span>
-                        <div
-                          className="max-w-xs truncate"
-                          title={link.targetUrl}
-                        >
-                          <a
-                            href={link.targetUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-blue-600 hover:underline"
-                          >
-                            {link.targetUrl}
-                          </a>
-                        </div>
-                      </td>
+                  {/* URL */}
+                  <div className="max-w-xs truncate">
+                    <a
+                      href={link.targetUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:underline"
+                    >
+                      {link.targetUrl}
+                    </a>
+                  </div>
 
-                      {/* Clicks */}
-                      <td className="px-6 py-2 whitespace-nowrap sm:table-cell block">
-                        <span className="sm:hidden font-semibold text-gray-600">
-                          Clicks:{" "}
-                        </span>
-                        <span className="px-2 py-1 text-sm font-semibold text-purple-800 bg-purple-100 rounded-full">
-                          {link.clicks}
-                        </span>
-                      </td>
+                  {/* Clicks */}
+                  <div>
+                    <span className="px-2 py-1 text-sm font-semibold text-purple-800 bg-purple-100 rounded-full">
+                      {link.clicks}
+                    </span>
+                  </div>
 
-                      {/* Actions */}
-                      <td className="px-6 py-2 whitespace-nowrap text-sm space-x-2 sm:table-cell block">
-                        <span className="sm:hidden font-semibold text-gray-600">
-                          Actions:{" "}
-                        </span>
+                  {/* Actions */}
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => copyToClipboard(link.code)}
+                      className={
+                        copiedCode === link.code
+                          ? "bg-green-600 text-white px-3 py-1 rounded"
+                          : "bg-purple-600 text-white px-3 py-1 rounded hover:bg-purple-700"
+                      }
+                    >
+                      {copiedCode === link.code ? "Copied!" : "Copy"}
+                    </button>
 
-                        <button
-                          onClick={() => copyToClipboard(link.code)}
-                          className={
-                            copiedCode === link.code
-                              ? "bg-green-600 text-white px-3 py-1 rounded transition"
-                              : "bg-purple-600 text-white px-3 py-1 rounded hover:bg-purple-700 transition"
-                          }
-                        >
-                          {copiedCode === link.code ? "Copied!" : "Copy"}
-                        </button>
-
-                        <button
-                          onClick={() => handleDelete(link.code)}
-                          disabled={deletingCode === link.code}
-                          className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 disabled:bg-gray-400 transition"
-                        >
-                          {deletingCode === link.code ? (
-                            <span className="flex items-center gap-2">
-                              <LoadingOutlined spin />
-                              Deleting...
-                            </span>
-                          ) : (
-                            "Delete"
-                          )}
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan={4} className="px-6 py-12 text-center">
-                      <p className="text-gray-500">
-                        No links found matching "{searchTerm}"
-                      </p>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+                    <button
+                      onClick={() => handleDelete(link.code)}
+                      disabled={deletingCode === link.code}
+                      className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 disabled:bg-gray-400"
+                    >
+                      {deletingCode === link.code ? "Deleting..." : "Delete"}
+                    </button>
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </div>
         </div>
       </div>

@@ -62,9 +62,9 @@ const Stats = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 py-8 px-4 flex items-center justify-center">
-        <div className="bg-white rounded-2xl shadow-2xl p-8">
-          <LoadingSpinner />
-        </div>
+        {/* <div className="bg-white rounded-2xl shadow-2xl p-8"> */}
+        <LoadingSpinner />
+        {/* </div> */}
       </div>
     );
   }
@@ -82,12 +82,12 @@ const Stats = () => {
               This link doesn't exist or has been deleted.
             </p>
 
-            <Link
+            {/* <Link
               to="/"
               className="inline-block bg-purple-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-purple-700 transition"
             >
               Go to Dashboard
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>
@@ -99,16 +99,6 @@ const Stats = () => {
     <div className="min-h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 py-8 px-4">
       <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-2xl shadow-2xl p-8">
-          {/* Back */}
-          <div className="mb-6">
-            <Link
-              to="/"
-              className="text-purple-600 hover:underline font-semibold"
-            >
-              ← Back to Dashboard
-            </Link>
-          </div>
-
           <h1 className="text-3xl font-bold text-gray-800 mb-8">
             📊 Link Statistics
           </h1>
