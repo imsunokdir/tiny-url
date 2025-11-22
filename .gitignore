@@ -1,0 +1,63 @@
+# ---------------------------
+# Global
+# ---------------------------
+node_modules/
+dist/
+build/
+.env
+.env.*
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+.DS_Store
+
+# ---------------------------
+# Client (Vite + React + TS)
+# ---------------------------
+client/node_modules/
+client/dist/
+client/.vite/
+client/.DS_Store
+
+# Editor folders
+client/.vscode/
+client/.idea/
+
+# Optional caches
+client/.eslintcache
+client/.turbo/
+
+# ---------------------------
+# Server (Node + TS + Prisma)
+# ---------------------------
+server/node_modules/
+server/dist/
+server/build/
+server/.env
+server/.env.*
+server/.DS_Store
+
+# Prisma generated folders
+server/prisma/dev.db-journal
+server/prisma/dev.db
+server/prisma/migrations/
+
+# TS build cache
+server/.tsbuildinfo
+
+# Editor folders
+server/.vscode/
+server/.idea/
+
+# Optional caches
+server/.eslintcache
+server/.turbo/
+
+# ---------------------------
+# OS system files
+# ---------------------------
+Thumbs.db
+desktop.ini
