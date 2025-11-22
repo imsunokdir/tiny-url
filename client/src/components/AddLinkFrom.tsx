@@ -8,8 +8,6 @@ interface AddLinkFormProps {
   onLinkCreated: () => void;
 }
 
-const API_URL = import.meta.env.VITE_API_URL;
-
 const AddLinkForm = ({ onLinkCreated }: AddLinkFormProps) => {
   const [targetUrl, setTargetUrl] = useState("");
   const [customCode, setCustomCode] = useState("");
@@ -46,7 +44,7 @@ const AddLinkForm = ({ onLinkCreated }: AddLinkFormProps) => {
         customCode: customCode || undefined,
       };
 
-      const link = await linkApi.createLink(input);
+      await linkApi.createLink(input);
 
       // setSuccess(`✅ Link created! Short URL: ${API_URL}/${link.code}`);
       messageApi.success({
