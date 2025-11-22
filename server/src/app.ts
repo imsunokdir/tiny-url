@@ -36,15 +36,6 @@ app.get("/healthz", (req: Request, res: Response) => {
 // API routes
 app.use(linkRoutes);
 
-// Frontend routes
-app.get("/", (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, "views", "dashboard.html"));
-});
-
-app.get("/code/:code", (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, "views", "stats.html"));
-});
-
 // Redirect route (MUST be last to avoid conflicts with other routes)
 app.get("/:code", linkController.redirectToTarget);
 
